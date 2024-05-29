@@ -1,6 +1,13 @@
-import numpy as np
 from os import listdir
 from os.path import isfile, join
+
+import numpy as np
+
+import ELAConverter
+
+
+def PreProcess(image_path):
+    return np.array(ELAConverter.convert_to_ela_image(image_path, 90).resize((128, 128))).flatten() / 255.0
 
 def getDataSet(DataSetType):
     X = [] # Images
@@ -16,7 +23,7 @@ def getDataSet(DataSetType):
     allFiles = [f for f in listdir(path) if isfile(join(path, f))]
     for file in allFiles:
         if file.endswith('jpg') or file.endswith('png'):
-            X.append(prepare_image(file))        
+            X.append(PreProcess(file))        
             Y.append(1)     # label for authentic images 
             
     print(f'Total images: {len(X)}\nTotal labels: {len(Y)}')
@@ -27,7 +34,7 @@ def getDataSet(DataSetType):
     allFiles = [f for f in listdir(path) if isfile(join(path, f))]
     for file in allFiles:
         if file.endswith('jpg') or file.endswith('png'):
-            X.append(prepare_image(file))        
+            X.append(PreProcess(file))        
             Y.append(1)     # label for authentic images 
             
     print(f'Total images: {len(X)}\nTotal labels: {len(Y)}')
