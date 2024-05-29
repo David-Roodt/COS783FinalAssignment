@@ -19,7 +19,7 @@ def convert_to_ela_image(filename,quality):
         max_difference = 1
     scale = 350.0 / max_difference
     
-    ela_image = ImageEnhance.Brightness(ela_image).enhance(scale)
+    ELA_Image = ImageEnhance.Brightness(ELA_Image).enhance(scale)
 
-    ela_image.save("ela_image.png")
-    return ela_image
+    ELA_Image.save("ela_image.png")
+    return ELA_Image

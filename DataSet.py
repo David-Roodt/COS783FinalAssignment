@@ -1,5 +1,5 @@
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile
 
 import numpy as np
 
@@ -14,13 +14,18 @@ def getDataSet(DataSetType):
     Y = [] # 0 = fake, 1 = real
 
     if(DataSetType == 0):
-        TestOrTrain = 'Train'
+        TestOrTrain = 'train'
     else:
-        TestOrTrain = 'Test'
+        TestOrTrain = 'test'
 
     path = TestOrTrain+'/REAL'
+    print(path);
 
-    allFiles = [f for f in listdir(path) if isfile(join(path, f))]
+    allFiles = []
+    for f in listdir(path):
+        if(isfile(path + '/'+ f)):
+            allFiles.append(path + '/'+ f);
+    
     for file in allFiles:
         if file.endswith('jpg') or file.endswith('png'):
             X.append(PreProcess(file))        
@@ -29,13 +34,18 @@ def getDataSet(DataSetType):
     print(f'Total images: {len(X)}\nTotal labels: {len(Y)}')
 
 
-    path = TestOrTrain+'FAKE'       #folder path of the forged images in the dataset
+    path = TestOrTrain+'/FAKE'
+    print(path);
 
-    allFiles = [f for f in listdir(path) if isfile(join(path, f))]
+    allFiles = []
+    for f in listdir(path):
+        if(isfile(path + '/'+ f)):
+            allFiles.append(path + '/'+ f);
+    
     for file in allFiles:
         if file.endswith('jpg') or file.endswith('png'):
             X.append(PreProcess(file))        
-            Y.append(1)     # label for authentic images 
+            Y.append(0)     # label for authentic images 
             
     print(f'Total images: {len(X)}\nTotal labels: {len(Y)}')
 
